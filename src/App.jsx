@@ -313,6 +313,13 @@ export default function App() {
             <GlitchText className="text-cyan-400 font-bold hidden sm:inline">DERICK MOKUA</GlitchText>
           </div>
           <nav className="hidden md:flex items-center gap-4 text-sm">
+            <a
+              href="#"
+              onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setIsMenuOpen(false); }}
+              className="text-gray-300 hover:text-cyan-400 hover:neon transition-all duration-300 px-2 py-1 rounded"
+            >
+              Home
+            </a>
             {navLinks.map(link => (
               <a key={link.name} href={link.href} onClick={(e) => scrollToSection(e, link.href)} className="text-gray-300 hover:text-cyan-400 hover:neon transition-all duration-300 px-2 py-1 rounded">
                 {link.name}
@@ -339,6 +346,13 @@ export default function App() {
         </header>
 
         <div className={`fixed inset-0 top-16 z-30 md:hidden glass-enhanced flex flex-col items-center justify-center gap-8 text-2xl transition-all duration-300 ${isMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full pointer-events-none'}`}>
+          <a
+            href="#"
+            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setIsMenuOpen(false); }}
+            className="text-gray-300 hover:text-cyan-400 hover:neon transition-all duration-300 px-4 py-2 rounded"
+          >
+            Home
+          </a>
           {navLinks.map(link => (
             <a key={link.name} href={link.href} onClick={(e) => scrollToSection(e, link.href)} className="text-gray-300 hover:text-cyan-400 hover:neon transition-all duration-300 px-4 py-2 rounded">
               {link.name}
