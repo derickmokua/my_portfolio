@@ -345,7 +345,7 @@ export default function App() {
           </div>
         </header>
 
-        <div className={`fixed inset-0 top-16 z-30 md:hidden glass-enhanced flex flex-col items-center justify-center gap-8 text-2xl transition-all duration-300 ${isMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full pointer-events-none'}`}>
+        <div className={`fixed inset-0 top-16 z-30 md:hidden glass-enhanced flex flex-col items-center justify-center gap-4 text-xl transition-all duration-300 ${isMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full pointer-events-none'}`}>
           <a
             href="#"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setIsMenuOpen(false); }}
