@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, Suspense, lazy } from 'react';
-import { Terminal, Shield, Wifi, Skull, Menu, X, Zap, Volume2, VolumeX } from 'lucide-react';
+import { Terminal, Shield, Wifi, Skull, Menu, X, Zap, Volume2, VolumeX, MessageCircle, Github, Linkedin, Mail } from 'lucide-react';
 import { motion, useScroll } from 'framer-motion';
 
 // --- DATA ---
@@ -43,12 +43,12 @@ export default function App() {
 
   useEffect(() => {
     if (audioRef.current) {
-        audioRef.current.volume = 0.1;
-        if (soundEnabled) {
-            audioRef.current.play().catch(error => console.log("Audio autoplay was prevented. User interaction needed."));
-        } else {
-            audioRef.current.pause();
-        }
+      audioRef.current.volume = 0.1;
+      if (soundEnabled) {
+        audioRef.current.play().catch(error => console.log("Audio autoplay was prevented. User interaction needed."));
+      } else {
+        audioRef.current.pause();
+      }
     }
   }, [soundEnabled]);
 
@@ -289,22 +289,22 @@ export default function App() {
           canvas { display: none; }
         }
       `}</style>
-      
+
       <audio ref={audioRef} loop src="[https://vgmsite.com/soundtracks/deus-ex-human-revolution-augmented-edition-gamerip/gqdxgnyf/2-01.%20Icarus%20-%20Main%20Theme.mp3](https://vgmsite.com/soundtracks/deus-ex-human-revolution-augmented-edition-gamerip/gqdxgnyf/2-01.%20Icarus%20-%20Main%20Theme.mp3)" />
 
       <div className="min-h-screen bg-black text-white font-mono overflow-x-hidden">
         <MatrixCanvas opacity={0.08} scrollY={scrollY} />
-        <ParticleField scrollY={scrollY}/>
+        <ParticleField scrollY={scrollY} />
         <ScanLines />
-        <CyberGrid scrollY={scrollY}/>
+        <CyberGrid scrollY={scrollY} />
         <EnergyPulse />
         <CursorTrail />
         <HUD scrollY={scrollY} />
 
         <motion.div
-            className="fixed inset-0 bg-gradient-radial from-cyan-500/10 via-transparent to-transparent -z-10"
-            animate={{ opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+          className="fixed inset-0 bg-gradient-radial from-cyan-500/10 via-transparent to-transparent -z-10"
+          animate={{ opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
         />
 
         <header className="fixed top-0 left-0 right-0 h-16 px-4 flex items-center justify-between z-40 shadow-lg glass-enhanced border-b border-cyan-500/20">
@@ -328,12 +328,12 @@ export default function App() {
           </nav>
           <div className="flex items-center gap-4">
             <button onClick={() => setSoundEnabled(!soundEnabled)} className="text-gray-300 hover:text-cyan-400 transition-colors duration-300">
-                {soundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
+              {soundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
             </button>
             <div className="md:hidden">
-                <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white">
+              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white">
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
+              </button>
             </div>
           </div>
           <div className="hidden md:flex items-center gap-4">
@@ -423,6 +423,42 @@ export default function App() {
 
           <footer className="relative py-8 px-4 border-t border-cyan-500/20 bg-black/50">
             <div className="max-w-5xl mx-auto text-center text-gray-400">
+              <div className="flex justify-center gap-6 mb-4">
+                <a
+                  href="mailto:contact@derickmokua.dev"
+                  className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+                  aria-label="Email"
+                >
+                  <Mail size={20} />
+                </a>
+                <a
+                  href="https://github.com/derickmokua"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+                  aria-label="GitHub"
+                >
+                  <Github size={20} />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/derick-mokua-b05165369"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin size={20} />
+                </a>
+                <a
+                  href="https://wa.me/254716883375"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-green-400 transition-colors duration-300"
+                  aria-label="WhatsApp"
+                >
+                  <MessageCircle size={20} />
+                </a>
+              </div>
               <p className="mb-2 text-cyan-400">Coded in the dark by Derick 🕶️</p>
               <p className="text-sm">&copy; 2025 Derick Mokua. All rights reserved.</p>
             </div>
