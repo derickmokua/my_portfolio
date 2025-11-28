@@ -28,9 +28,9 @@ const ContactSection = ({variants, formData, handleInputChange, handleFormSubmit
         </form>
         <div className="mt-8 pt-6 border-t border-cyan-500/20 flex justify-center gap-6">
           <a href="mailto:contact@derickmokua.dev" className="relative group text-gray-400 hover:text-cyan-400 transition-colors duration-300"><Mail/><span className="tooltip">Email</span></a>
-          <a href="[https://github.com/derickmokua](https://github.com/derickmokua)" target="_blank" rel="noopener noreferrer" className="relative group text-gray-400 hover:text-cyan-400 transition-colors duration-300"><Github/><span className="tooltip">GitHub</span></a>
-          <a href="[https://linkedin.com/in/derickmokua](https://linkedin.com/in/derickmokua)" target="_blank" rel="noopener noreferrer" className="relative group text-gray-400 hover:text-cyan-400 transition-colors duration-300"><Linkedin/><span className="tooltip">LinkedIn</span></a>
-          <a href="[https://wa.me/254712345678](https://wa.me/254712345678)" target="_blank" rel="noopener noreferrer" className="relative group text-gray-400 hover:text-cyan-400 transition-colors duration-300"><WhatsappIcon/><span className="tooltip">WhatsApp</span></a>
+          <a href="https://github.com/derickmokua" target="_blank" rel="noopener noreferrer" className="relative group text-gray-400 hover:text-cyan-400 transition-colors duration-300"><Github/><span className="tooltip">GitHub</span></a>
+          <a href="https://www.linkedin.com/in/derick-mokua-b05165369" target="_blank" rel="noopener noreferrer" className="relative group text-gray-400 hover:text-cyan-400 transition-colors duration-300"><Linkedin/><span className="tooltip">LinkedIn</span></a>
+          <a href="https://wa.me/254716883375" target="_blank" rel="noopener noreferrer" className="relative group text-gray-400 hover:text-cyan-400 transition-colors duration-300"><WhatsappIcon/><span className="tooltip">WhatsApp</span></a>
         </div>
       </div>
     </div>
