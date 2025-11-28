@@ -431,33 +431,6 @@ export default function App() {
                 >
                   <Mail size={24} />
                 </a>
-                <a
-                  href="https://github.com/derickmokua"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors duration-300"
-                  aria-label="GitHub"
-                >
-                  <Github size={24} />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/derick-mokua-b05165369"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin size={24} />
-                </a>
-                <a
-                  href="https://wa.me/254716883375"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-green-400 transition-colors duration-300"
-                  aria-label="WhatsApp"
-                >
-                  <MessageCircle size={24} />
-                </a>
               </div>
               <p className="mb-2 text-cyan-400">Coded in the dark by Derick 🕶️</p>
               <p className="text-sm">&copy; 2025 Derick Mokua. All rights reserved.</p>
