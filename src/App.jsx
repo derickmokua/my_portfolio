@@ -423,6 +423,42 @@ export default function App() {
 
           <footer className="relative py-8 px-4 border-t border-cyan-500/20 bg-black/50">
             <div className="max-w-5xl mx-auto text-center text-gray-400">
+              <div className="flex justify-center items-center gap-6 mb-4">
+                <a
+                  href="mailto:contact@derickmokua.dev"
+                  className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+                  aria-label="Email"
+                >
+                  <Mail size={24} />
+                </a>
+                <a
+                  href="https://github.com/derickmokua"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                  aria-label="GitHub"
+                >
+                  <Github size={24} />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/derick-mokua-b05165369"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin size={24} />
+                </a>
+                <a
+                  href="https://wa.me/254716883375"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-green-400 transition-colors duration-300"
+                  aria-label="WhatsApp"
+                >
+                  <MessageCircle size={24} />
+                </a>
+              </div>
               <p className="mb-2 text-cyan-400">Coded in the dark by Derick 🕶️</p>
               <p className="text-sm">&copy; 2025 Derick Mokua. All rights reserved.</p>
             </div>
