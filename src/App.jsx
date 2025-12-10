@@ -229,10 +229,10 @@ const App = () => {
               transition={{ delay: 1 }}
               className="flex gap-4"
             >
-              <a href="#contact" onClick={(e) => scrollToSection(e, '#contact')} className="px-6 py-3 bg-gold-600 hover:bg-gold-500 text-black font-bold rounded-lg transition-all flex items-center gap-2 transform hover:translate-x-1">
+              <a href="#contact" onClick={(e) => scrollToSection(e, '#contact')} className="px-5 py-2.5 md:px-6 md:py-3 bg-gold-600 hover:bg-gold-500 text-black font-bold rounded-lg transition-all flex items-center gap-2 transform hover:translate-x-1 text-sm md:text-base">
                 Start Project <ChevronRight size={18} />
               </a>
-              <a href="#projects" onClick={(e) => scrollToSection(e, '#projects')} className="px-6 py-3 border border-zinc-800 hover:border-gold-500 text-zinc-300 hover:text-white rounded-lg transition-all">
+              <a href="#projects" onClick={(e) => scrollToSection(e, '#projects')} className="px-5 py-2.5 md:px-6 md:py-3 border border-zinc-800 hover:border-gold-500 text-zinc-300 hover:text-white rounded-lg transition-all text-sm md:text-base">
                 View Work
               </a>
             </motion.div>
