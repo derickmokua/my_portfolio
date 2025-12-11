@@ -171,10 +171,10 @@ const App = () => {
         </AnimatePresence>
       </motion.nav>
 
-      <main className="max-w-7xl mx-auto px-6 pt-32 pb-20 space-y-32">
+      <main className="max-w-7xl mx-auto px-6 pt-32 pb-20 space-y-20">
 
         {/* HERO SECTION */}
-        <section id="home" className="min-h-[80vh] flex flex-col justify-center relative">
+        <section id="home" className="min-h-[60vh] flex flex-col justify-center relative">
           <div className="absolute -top-20 -left-20 w-96 h-96 bg-gold-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
           <div className="relative z-10">
@@ -252,7 +252,7 @@ const App = () => {
                   I am a passionate <span className="text-gold-400">Backend Developer</span> and <span className="text-gold-400">Cybersecurity Engineer</span> based in Nairobi. My mission is to build systems that are not only performant but inherently secure.
                 </p>
                 <p>
-                  With expertise ranging from low-level network security to high-level AI integrations, I bridge the gap between "it works" and "it's unassailable."
+                  With expertise ranging from low-level network security to high-level AI integrations, I bridge the gap between "it works" and "it's unassailable." I specialize in robust backend architectures using <strong className="text-gold-400">Node.js</strong>, <strong className="text-gold-400">Python</strong>, <strong className="text-gold-400">PostgreSQL</strong>, <strong className="text-gold-400">Redis</strong>, and <strong className="text-gold-400">Docker</strong>.
                 </p>
               </div>
             </div>
@@ -271,7 +271,7 @@ const App = () => {
               whileInView="visible"
               viewport={{ once: true }}
               variants={staggerContainer}
-              className="grid grid-cols-2 md:grid-cols-3 gap-4"
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
             >
               {skills.map((skill) => (
                 <motion.div variants={fadeInUp} key={skill.name} className="bg-zinc-900/30 border border-zinc-800 hover:border-gold-500/50 p-4 rounded-xl transition-all group hover:-translate-y-1">
@@ -559,30 +559,38 @@ const App = () => {
         </section >
 
         {/* Footer */}
-        < footer className="border-t border-zinc-900 pt-8 flex flex-col md:flex-row items-center justify-between text-zinc-600 text-sm" >
-          <div className="flex flex-col gap-1 mb-4 md:mb-0 text-center md:text-left">
-            <p>© 2025 Derick Mokua. All systems operational.</p>
+        {/* Footer */}
+        {/* Footer */}
+        {/* Footer */}
+        <footer className="border-t border-zinc-900 py-8 text-zinc-400 text-sm">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+
+            <div className="flex flex-col gap-1 mb-4 md:mb-0 text-center md:text-left">
+              <p>© 2025 Derick Mokua. All systems operational.</p>
+            </div>
+
+            <div className="flex gap-4">
+              {[
+                { icon: <Linkedin size={18} />, href: "https://www.linkedin.com/in/derick-mokua-b05165369/", label: "LinkedIn" },
+                { icon: <MessageCircle size={18} />, href: "https://wa.me/254716883375", label: "WhatsApp" },
+                { icon: <Phone size={18} />, href: "tel:+254716883375", label: "Call" }
+              ].map((social, index) => (
+                <motion.a
+                  key={index}
+                  href={social.href}
+                  whileHover={{ scale: 1.2, color: '#e6b000' }}
+                  className="relative group text-zinc-300 transition-colors p-2"
+                >
+                  {social.icon}
+                  <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-zinc-900 border border-zinc-800 text-gold-500 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                    {social.label}
+                  </span>
+                </motion.a>
+              ))}
+            </div>
+
           </div>
-          <div className="flex gap-4">
-            {[
-              { icon: <Linkedin size={18} />, href: "https://www.linkedin.com/in/derick-mokua-b05165369/", label: "LinkedIn" },
-              { icon: <MessageCircle size={18} />, href: "https://wa.me/254716883375", label: "WhatsApp" },
-              { icon: <Phone size={18} />, href: "tel:+254716883375", label: "Call" }
-            ].map((social, index) => (
-              <motion.a
-                key={index}
-                href={social.href}
-                whileHover={{ scale: 1.2, color: '#e6b000' }}
-                className="relative group text-zinc-500 transition-colors p-2"
-              >
-                {social.icon}
-                <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-zinc-900 border border-zinc-800 text-gold-500 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-                  {social.label}
-                </span>
-              </motion.a>
-            ))}
-          </div>
-        </footer >
+        </footer>
 
       </main >
 
@@ -632,15 +640,19 @@ const App = () => {
                 <h2 className="text-3xl font-bold text-white mb-6">{selectedBlogPost.title}</h2>
 
                 <div className="prose prose-invert prose-gold max-w-none">
-                  <p className="text-zinc-300 text-lg leading-relaxed mb-6">
-                    {selectedBlogPost.desc}
-                  </p>
-                  <p className="text-zinc-400 leading-relaxed mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                  </p>
-                  <p className="text-zinc-400 leading-relaxed mb-4">
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  </p>
+                  {/* Render dynamic content if available, otherwise fallback to description */}
+                  {selectedBlogPost.content ? (
+                    selectedBlogPost.content.map((paragraph, index) => (
+                      <p key={index} className="text-zinc-300 text-lg leading-relaxed mb-6">
+                        {paragraph}
+                      </p>
+                    ))
+                  ) : (
+                    <p className="text-zinc-300 text-lg leading-relaxed mb-6">
+                      {selectedBlogPost.desc}
+                    </p>
+                  )}
+
                   <div className="bg-black p-4 rounded-xl border border-zinc-800 my-6 font-mono text-sm text-zinc-400">
                     $ echo "Security is a process, not a product."
                   </div>
