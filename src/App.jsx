@@ -713,24 +713,24 @@ const App = () => {
                 <div className="prose prose-invert prose-gold max-w-none">
                   {/* Render dynamic markdown content if available */}
                   {selectedBlogPost.markdown ? (
-                     <ReactMarkdown
-                        components={{
-                          // Custom styling for specific elements if needed, though prose-invert handles most
-                          a: ({node, ...props}) => <a {...props} className="text-gold-500 hover:text-gold-400 underline" target="_blank" rel="noopener noreferrer" />,
-                          img: ({node, ...props}) => <img {...props} className="rounded-xl border border-zinc-800 my-6" />,
-                          code: ({node, inline, className, children, ...props}) => {
-                            return inline ? (
-                              <code className="bg-zinc-800 text-gold-200 px-1 rounded" {...props}>{children}</code>
-                            ) : (
-                              <code className="block bg-black p-4 rounded-lg border border-zinc-800 overflow-x-auto text-sm font-mono text-zinc-300 my-4" {...props}>
-                                {children}
-                              </code>
-                            )
-                          }
-                        }}
-                     >
-                       {selectedBlogPost.markdown}
-                     </ReactMarkdown>
+                    <ReactMarkdown
+                      components={{
+                        // Custom styling for specific elements if needed, though prose-invert handles most
+                        a: ({ node, ...props }) => <a {...props} className="text-gold-500 hover:text-gold-400 underline" target="_blank" rel="noopener noreferrer" />,
+                        img: ({ node, ...props }) => <img {...props} className="rounded-xl border border-zinc-800 my-6" />,
+                        code: ({ node, inline, className, children, ...props }) => {
+                          return inline ? (
+                            <code className="bg-zinc-800 text-gold-200 px-1 rounded" {...props}>{children}</code>
+                          ) : (
+                            <code className="block bg-black p-4 rounded-lg border border-zinc-800 overflow-x-auto text-sm font-mono text-zinc-300 my-4" {...props}>
+                              {children}
+                            </code>
+                          )
+                        }
+                      }}
+                    >
+                      {selectedBlogPost.markdown}
+                    </ReactMarkdown>
                   ) : selectedBlogPost.content ? (
                     // Fallback for static/legacy posts (array of strings)
                     selectedBlogPost.content.map((paragraph, index) => (
@@ -744,10 +744,10 @@ const App = () => {
                 </div>
 
 
-                  <div className="bg-black p-4 rounded-xl border border-zinc-800 my-6 font-mono text-sm text-zinc-400">
-                    $ echo "Security is a process, not a product."
-                  </div>
+                <div className="bg-black p-4 rounded-xl border border-zinc-800 my-6 font-mono text-sm text-zinc-400">
+                  $ echo "Security is a process, not a product."
                 </div>
+
 
                 <div className="mt-8 pt-8 border-t border-zinc-800 flex flex-wrap gap-2">
                   {selectedBlogPost.tags.map(tag => (
