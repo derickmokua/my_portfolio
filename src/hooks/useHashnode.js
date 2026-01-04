@@ -29,6 +29,9 @@ const useHashnodePosts = () => {
                     name
                   }
                   url
+                  content {
+                    markdown
+                  }
                 }
               }
             }
@@ -70,9 +73,9 @@ const useHashnodePosts = () => {
             day: 'numeric',
           }),
           tags: node.tags ? node.tags.map((t) => t.name) : [],
-          link: node.url,
+          link: node.url, // Keep the link just in case
+          markdown: node.content.markdown, // Full markdown content
           coverImage: node.coverImage ? node.coverImage.url : null,
-          content: [node.brief + "..."]
         }));
 
         setPosts(formattedPosts);
@@ -80,7 +83,7 @@ const useHashnodePosts = () => {
       } catch (err) {
         console.error('Error fetching Hashnode posts:', err);
         setError(err);
-        setPosts([]); // Ensure empty state on error so app doesn't crash
+        setPosts([]); // Ensure empty state on error
         setLoading(false);
       }
     };

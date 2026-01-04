@@ -5,6 +5,7 @@ import { Terminal, Code, Cpu, Globe, ExternalLink, Github, Mail, Smartphone, Dat
 import { skills, projects, services, testimonials, blogPosts as staticBlogPosts, navLinks } from './data/portfolioData';
 import Chatbot from './components/Chatbot';
 import useHashnodePosts from './hooks/useHashnode';
+import ReactMarkdown from 'react-markdown';
 
 // Animation Variants
 const fadeInUp = {
@@ -471,7 +472,7 @@ const App = () => {
                 <motion.article
                   whileHover={{ x: 10 }}
                   key={post.title}
-                  onClick={() => post.link ? window.open(post.link, '_blank') : setSelectedBlogPost(post)}
+                  onClick={() => setSelectedBlogPost(post)}
                   className="flex flex-col md:flex-row gap-4 p-6 border border-zinc-800 rounded-2xl bg-zinc-900/20 hover:border-gold-600/50 hover:bg-gold-900/5 transition-all cursor-pointer group"
                 >
                   <div className="md:w-32 flex-shrink-0 text-gold-500 font-mono text-sm border-l-2 border-gold-500 pl-4 h-fit">
@@ -710,18 +711,38 @@ const App = () => {
                 <h2 className="text-3xl font-bold text-white mb-6">{selectedBlogPost.title}</h2>
 
                 <div className="prose prose-invert prose-gold max-w-none">
-                  {/* Render dynamic content if available, otherwise fallback to description */}
-                  {selectedBlogPost.content ? (
+                  {/* Render dynamic markdown content if available */}
+                  {selectedBlogPost.markdown ? (
+                     <ReactMarkdown
+                        components={{
+                          // Custom styling for specific elements if needed, though prose-invert handles most
+                          a: ({node, ...props}) => <a {...props} className="text-gold-500 hover:text-gold-400 underline" target="_blank" rel="noopener noreferrer" />,
+                          img: ({node, ...props}) => <img {...props} className="rounded-xl border border-zinc-800 my-6" />,
+                          code: ({node, inline, className, children, ...props}) => {
+                            return inline ? (
+                              <code className="bg-zinc-800 text-gold-200 px-1 rounded" {...props}>{children}</code>
+                            ) : (
+                              <code className="block bg-black p-4 rounded-lg border border-zinc-800 overflow-x-auto text-sm font-mono text-zinc-300 my-4" {...props}>
+                                {children}
+                              </code>
+                            )
+                          }
+                        }}
+                     >
+                       {selectedBlogPost.markdown}
+                     </ReactMarkdown>
+                  ) : selectedBlogPost.content ? (
+                    // Fallback for static/legacy posts (array of strings)
                     selectedBlogPost.content.map((paragraph, index) => (
                       <p key={index} className="text-zinc-300 text-lg leading-relaxed mb-6">
                         {paragraph}
                       </p>
                     ))
                   ) : (
-                    <p className="text-zinc-300 text-lg leading-relaxed mb-6">
-                      {selectedBlogPost.desc}
-                    </p>
+                    <p className="text-zinc-400">Content unavailable.</p>
                   )}
+                </div>
+
 
                   <div className="bg-black p-4 rounded-xl border border-zinc-800 my-6 font-mono text-sm text-zinc-400">
                     $ echo "Security is a process, not a product."
@@ -743,7 +764,7 @@ const App = () => {
 
       <Chatbot />
 
-    </div>
+    </div >
   );
 };
 
