@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Code, Cpu, Globe, ExternalLink, Github, Mail, Smartphone, Database, Wind, Menu, X, ChevronRight, Star, ArrowUp, Send, Loader2, Linkedin, MessageCircle, Phone } from 'lucide-react';
-import { skills, projects, services, testimonials, blogPosts, navLinks } from './data/portfolioData';
+import { skills, projects, services, testimonials, blogPosts as staticBlogPosts, navLinks } from './data/portfolioData';
+import Chatbot from './components/Chatbot';
+import useHashnodePosts from './hooks/useHashnode';
 
 // Animation Variants
 const fadeInUp = {
@@ -43,6 +46,9 @@ const App = () => {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
+
+  // Blog Data
+  const { posts, loading, error } = useHashnodePosts();
 
   // Typing effect
   useEffect(() => {
@@ -105,16 +111,46 @@ const App = () => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      setFormState({ name: '', email: '', message: '' });
+
+    // Configuration from .env file
+    const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceID || !templateID || !publicKey) {
+      console.error('EmailJS environment variables are missing.');
+      setSubmitStatus('missing_config'); // Specific error state
       setTimeout(() => setSubmitStatus(null), 5000);
-    }, 2000);
+      setIsSubmitting(false);
+      return;
+    }
+
+    const templateParams = {
+      from_name: formState.name,
+      from_email: formState.email,
+      message: formState.message,
+      to_name: 'Derick Mokua',
+    };
+
+    emailjs.send(serviceID, templateID, templateParams, publicKey)
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        setSubmitStatus('success');
+        setFormState({ name: '', email: '', message: '' });
+        setTimeout(() => setSubmitStatus(null), 5000);
+      })
+      .catch((err) => {
+        console.error('FAILED...', err);
+        if (err.text) console.error('Error Text:', err.text); // EmailJS specific error text
+        setSubmitStatus('api_error');
+        setTimeout(() => setSubmitStatus(null), 5000);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   return (
@@ -418,20 +454,35 @@ const App = () => {
               <span>Latest_Intel</span>
             </h2>
             <div className="space-y-4">
-              {blogPosts.map((post) => (
+              {/* Loading State causes layout shift, so min-height */}
+              {loading && (
+                <div className="text-zinc-500 font-mono text-sm animate-pulse">
+                  {">"} fetching_latest_intel_from_hashnode...
+                </div>
+              )}
+
+              {!loading && posts.length === 0 && (
+                <div className="text-zinc-500 font-mono text-sm">
+                  {">"} no_active_transmissions_found.
+                </div>
+              )}
+
+              {posts.map((post) => (
                 <motion.article
                   whileHover={{ x: 10 }}
                   key={post.title}
-                  onClick={() => setSelectedBlogPost(post)}
-                  className="flex flex-col md:flex-row gap-4 p-6 border border-zinc-800 rounded-2xl bg-zinc-900/20 hover:border-gold-600/50 hover:bg-gold-900/5 transition-all cursor-pointer"
+                  onClick={() => post.link ? window.open(post.link, '_blank') : setSelectedBlogPost(post)}
+                  className="flex flex-col md:flex-row gap-4 p-6 border border-zinc-800 rounded-2xl bg-zinc-900/20 hover:border-gold-600/50 hover:bg-gold-900/5 transition-all cursor-pointer group"
                 >
                   <div className="md:w-32 flex-shrink-0 text-gold-500 font-mono text-sm border-l-2 border-gold-500 pl-4 h-fit">
                     {post.date}
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2">{post.title}</h3>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2 group-hover:text-gold-400 transition-colors">
+                      {post.title} <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity text-zinc-500" />
+                    </h3>
                     <p className="text-zinc-400 mb-3">{post.desc}</p>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 flex-wrap">
                       {post.tags.map(tag => (
                         <span key={tag} className="text-xs px-2 py-1 rounded bg-black border border-zinc-800 text-zinc-500">#{tag}</span>
                       ))}
@@ -552,6 +603,24 @@ const App = () => {
                       Transmission Received. Stand by.
                     </motion.p>
                   )}
+                  {submitStatus === 'missing_config' && (
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-red-400 text-center text-sm mt-2 font-bold"
+                    >
+                      Error: Missing Configuration. Check .env file.
+                    </motion.p>
+                  )}
+                  {submitStatus === 'api_error' && (
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-red-400 text-center text-sm mt-2"
+                    >
+                      Error: Sending Failed. Details in Console.
+                    </motion.p>
+                  )}
                 </form>
               </div>
             </div>
@@ -566,12 +635,13 @@ const App = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
 
             <div className="flex flex-col gap-1 mb-4 md:mb-0 text-center md:text-left">
-              <p>© 2025 Derick Mokua. All systems operational.</p>
+              <p>© 2025 Derick Mokua. All Rights Reserved.</p>
             </div>
 
             <div className="flex gap-4">
               {[
                 { icon: <Linkedin size={18} />, href: "https://www.linkedin.com/in/derick-mokua-b05165369/", label: "LinkedIn" },
+                { icon: <Github size={18} />, href: "https://github.com/derickmokua", label: "GitHub", className: "md:hidden" },
                 { icon: <MessageCircle size={18} />, href: "https://wa.me/254716883375", label: "WhatsApp" },
                 { icon: <Phone size={18} />, href: "tel:+254716883375", label: "Call" }
               ].map((social, index) => (
@@ -579,7 +649,7 @@ const App = () => {
                   key={index}
                   href={social.href}
                   whileHover={{ scale: 1.2, color: '#e6b000' }}
-                  className="relative group text-zinc-300 transition-colors p-2"
+                  className={`relative group text-zinc-300 transition-colors p-2 ${social.className || ''}`}
                 >
                   {social.icon}
                   <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-zinc-900 border border-zinc-800 text-gold-500 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
@@ -669,9 +739,11 @@ const App = () => {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence >
+      </AnimatePresence>
 
-    </div >
+      <Chatbot />
+
+    </div>
   );
 };
 
